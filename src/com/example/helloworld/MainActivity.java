@@ -1,11 +1,12 @@
 package com.example.helloworld;
 
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import android.os.*;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
 	ImageView showImg,camera,gallery;
 	public static File fileName;
 	private String selectedImagePath;
+	public static File imageStorageDir;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
 	    	}
 	    });
 	}
-	public void open(){
+	public void open(){/*Open Camera*/
 	      Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 	      fileUri = getOutputImageFileUri(); // create a file to save the image
 		  intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, fileUri);
@@ -57,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 	}
 	/** Create a File for saving the image */
 	private static File getOutputImageFile(){
-	    File imageStorageDir = new File(Environment.getExternalStorageDirectory(),"Vaani");
+	    imageStorageDir = new File(Environment.getExternalStorageDirectory(),"Vaani");
 	    if (!imageStorageDir.exists())
         {
             imageStorageDir.mkdirs();// Create the storage directory if it does not exist

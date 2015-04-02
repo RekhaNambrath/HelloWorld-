@@ -1,4 +1,5 @@
 package com.example.helloworld;
+import java.io.File;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -7,15 +8,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-//import android.util.*;
-
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.example.helloworld.R;
-import java.io.*;
+
 //import android.media.*;
 
 public class SecondActivity extends ActionBarActivity {
@@ -32,16 +31,10 @@ public class SecondActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_next);
 		String myRef = this.getIntent().getStringExtra("name");
 	    imgFile = new  File(myRef);
-		
-		/*Bitmap bitmap  = getIntent().getExtras().getParcelable("name");
-        ImageView showImg = (ImageView) findViewById(R.id.view_photo);
-        showImg.setImageBitmap(bitmap);*/
-		
+	    
         /*Display Image*/
         if(imgFile.exists()){
         	Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        	//BitmapFactory.Options options = new BitmapFactory.Options();
-        	//options.inSampleSize = 4;
        		ImageView showImg = (ImageView) findViewById(R.id.view_photo);
         	showImg.setImageBitmap(myBitmap);
         	}
@@ -57,14 +50,13 @@ public class SecondActivity extends ActionBarActivity {
 		        	    //set crop properties
 		        	cropIntent.putExtra("crop", "true");
 		        	    //indicate aspect of desired crop
-		        	cropIntent.putExtra("aspectX", 1);
-		        	cropIntent.putExtra("aspectY", 1);
+		        	cropIntent.putExtra("aspectX",0);
+		        	cropIntent.putExtra("aspectY",0);
 		        	    //indicate output X and Y
 		        	cropIntent.putExtra("outputX", 256);
 		        	cropIntent.putExtra("outputY", 256);
 		        	cropIntent.putExtra("scale", true);
-		        	//cropIntent.putExtra("return-data", true);
-		        	    //retrieve data on return
+		       		    //retrieve data on return
 		        	cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, true);
 		        	    //start the activity - we handle returning in onActivityResult
 		        	startActivityForResult(cropIntent, PIC_CROP);

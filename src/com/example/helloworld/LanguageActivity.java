@@ -17,9 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-//import android.content.Intent;
-//import android.view.View;
-//import android.widget.Button;
+
 
 public class LanguageActivity extends ActionBarActivity {
 
@@ -28,14 +26,14 @@ public class LanguageActivity extends ActionBarActivity {
 		ImageView showImg;
 		private Spinner spinner1;
 		public static File fileName;
-		String value;
+		String value,myRef;
 		Button button;
 		@Override
 		
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_lang);
-			String myRef = this.getIntent().getStringExtra("name");
+			myRef = this.getIntent().getStringExtra("name");
 		    imgFile = new  File(myRef);
 		   
 		    /*Display Image*/
@@ -76,7 +74,7 @@ public class LanguageActivity extends ActionBarActivity {
 		
 		 public void gotoFinalActivity(){
 			 Intent first = new Intent(this, FinalActivity.class);
-			 first.putExtra("name",imgFile.toString());
+			 first.putExtra("name",myRef);
 			 //first.putExtra("choice", value);
 			 startActivity(first);
 		 }
