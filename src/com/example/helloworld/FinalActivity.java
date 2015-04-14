@@ -40,16 +40,20 @@ public class FinalActivity extends ActionBarActivity {
 	    translated.setText("HEre you will get text");
 	    //ContextWrapper appContext = null; 
 		
-	    File tessdata=new File(Environment.getExternalStorageDirectory(),"Vanidata");
-	    if (!tessdata.exists()) {
-               tessdata.mkdirs();// Create the storage directory if it does not exist
-	   	}
-	    String tessFileDir = tessdata.getAbsolutePath();
-		
-	    try {
+	    String tessdata=Environment.getExternalStorageDirectory().toString()+"/Vanidata";
+	    
+	    String[] paths = new String[] { tessdata, tessdata + "/tessdata/" };
+	    for (String path : paths) {
+	    	File dir = new File(path);
+	    	if (!dir.exists()) {
+               dir.mkdirs();// Create the storage directory if it does not exist
+	    	}
+	    }
+	    if (!(new File(tessdata + "/tessdata/" + lang + ".traineddata")).exists()) {
+	    	try {
 		    	  AssetManager assetManager = getAssets();
-		          InputStream in = assetManager.open("tessdata/eng.traineddata");
-		          OutputStream out = new FileOutputStream(tessFileDir + "tessdata/eng.traineddata");
+		          InputStream in = assetManager.open("/tessdata/eng.traineddata");
+		          OutputStream out = new FileOutputStream(tessdata +"/tessdata/eng.traineddata");
 
 		          // Transfer bytes from in to out
 		          byte[] buf = new byte[1024];
@@ -66,10 +70,11 @@ public class FinalActivity extends ActionBarActivity {
 		    	catch (IOException e) {
 		    		Log.e(TAG, "Was unable to copy " + lang + " traineddata " + e.toString());
 		    	}
+	    }
 	    
 		    TessBaseAPI baseApi = new TessBaseAPI();
 		    
-		    String  DATA_PATH=tessFileDir + "tessdata/";
+		    String  DATA_PATH=tessdata + "/tessdata/";
 		    baseApi.init(DATA_PATH,lang);
 		    baseApi.setImage(bitmap);
 		    String recognizedText = baseApi.getUTF8Text();
@@ -87,5 +92,5 @@ public class FinalActivity extends ActionBarActivity {
 	        }
 	        
 	 
-}
+	}
 }
